@@ -28,5 +28,8 @@ public class DriverClass {
         keyReadLine2.display();
         keyReadLine2.sort();
         keyReadLine2.find(7);
+        System.out.println("===================================");
+        long n = 1234567890;
+        System.out.printf("The figure for %d is %s", n, ToWords.fig_to_words(n));
     }
 }

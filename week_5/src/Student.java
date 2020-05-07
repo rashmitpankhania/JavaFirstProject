@@ -32,14 +32,14 @@ class Student {
                 '}';
     }
 
-    static class NameComparator implements Comparator<Student>{
+    static class NameComparator implements Comparator<Student> {
         @Override
         public int compare(Student o1, Student o2) {
             return o1.getName().compareTo(o2.getName());
         }
     }
 
-    static class CityComparator implements Comparator<Student>{
+    static class CityComparator implements Comparator<Student> {
         @Override
         public int compare(Student o1, Student o2) {
             return o1.getCity().compareTo(o2.getCity());
@@ -48,5 +48,4 @@ class Student {
 }
 
 class StudentNotFoundException extends Exception {
-
 }

@@ -1,5 +1,6 @@
 .idea/
-java-project.iml
+*.iml
+*.class
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -12,4 +13,3 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 out
-JavaFirstProject.iml

@@ -13,3 +13,5 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 out
+week_1/bin/Jenkinsfile
+week_1/bin/pom.xml

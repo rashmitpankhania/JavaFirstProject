@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
     <title>Document</title>
     <h1 id="title_panel">My Panel</h1>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -43,30 +44,11 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Expression</th>
+                <th scope="col">Answer</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
         </tbody>
     </table>
 </article>
@@ -97,7 +79,7 @@
                 <td><input type="button" value="/" onClick="document.calculator.ans.value+='/'"></td>
                 <td><input type="button" value="0" onClick="document.calculator.ans.value+='0'"></td>
                 <td><input type="button" value="="
-                        onClick="document.calculator.ans.value=eval(document.calculator.ans.value)"></td>
+                        onClick=make()></td>
                 <td><input type="reset" value="CLR"></td>
 
             </tr>
@@ -108,5 +90,4 @@
 
     </form>
 </article>
-
 </html>

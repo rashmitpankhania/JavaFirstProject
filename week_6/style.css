@@ -7,9 +7,14 @@ article{
     margin-bottom: 10px;
 }
 
+.bgray {
+    background-color: gray;
+}
+
 #calculator {
     align-self: center;
     border-spacing: 0;
+    margin: 0 25% 25% 25%;
 }
 
 #calculator tr td input {
@@ -34,4 +39,16 @@ li {
     padding-bottom: 50px;
     width: 100%;
     font-size: 100px;
+}
+
+#calculator table {
+    margin:0 0 25% 25%;
+}
+
+#calculator h1 {
+    text-align: center;
+}
+
+#table_reports tbody td {
+    font-size: xx-large;
 }

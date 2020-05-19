@@ -8,12 +8,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class Week7Application {
+public class EmployeeXMLContainer {
     static String[] cities = {"Delhi", "Kolkata", "Bangalore", "Chennai", "Ahmedabad"};
     static String[] names = {"Peter", "Pierre", "George", "John", "Mina"};
 
     public static void main(String[] args) {
-        SpringApplication.run(Week7Application.class, args);
+        SpringApplication.run(EmployeeXMLContainer.class, args);
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("employee-spring.xml");
         Employee[] employees = new Employee[5];
         for (int i=0;i<5;i++){

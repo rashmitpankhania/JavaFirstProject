@@ -1,4 +1,4 @@
-package org.sapient;
+package org.sapient.Number;
 
 public interface MyNumber {
     int checkPrime(int x);

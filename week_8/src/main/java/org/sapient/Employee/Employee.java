@@ -1,4 +1,4 @@
-package org.sapient;
+package org.sapient.Employee;
 
 public class Employee {
     private int id;

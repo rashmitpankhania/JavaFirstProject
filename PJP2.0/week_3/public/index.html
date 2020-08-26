@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Date time Calculator</title>
+</head>
+<body>
+<header>
+    <h1>Date time Calculator</h1>
+</header>
+<div class="flex-container">
+    <div style="display: flex;flex-direction: column">
+        <h2>
+            <button type="submit" onClick=displayYesterday()>Yesterday</button>
+        </h2>
+        <p id="yesterdayDate"></p>
+    </div>
+    <div style="display: flex;flex-direction: column">
+        <h2>
+            <button type="submit" onClick=displayToday()>Today</button>
+        </h2>
+        <p id="todayDate"></p>
+    </div>
+    <div style="display: flex;flex-direction: column">
+        <h2>
+            <button type="submit" onClick=displayTomorrow()>Tomorrow</button>
+        </h2>
+        <p id="tomorrowDate"></p>
+    </div>
+</div>
+<footer>
+    <script src="script.js"></script>
+    Copyright by Rashmit Pankhania.&copy;
+</footer>
+</body>
+</html>

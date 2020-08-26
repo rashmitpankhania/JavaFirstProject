@@ -1,0 +1,25 @@
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-container > div > p {
+    font-size: 3em;
+    margin: 0;
+}
+
+.flex-container > div {
+    width: 100%;
+    align-items: center;
+}
+
+.flex-container > div > h2 > button {
+    height: 2em;
+    font-size: large;
+}
+
+header > h1 {
+    font-size: xx-large;
+    font-weight: normal;
+    text-align: center;
+}

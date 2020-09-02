@@ -9,26 +9,35 @@
 <header>
     <h1>Date time Calculator</h1>
 </header>
+<section>
 <div class="flex-container">
-    <div style="display: flex;flex-direction: column">
-        <h2>
-            <button type="submit" onClick=displayYesterday()>Yesterday</button>
-        </h2>
-        <p id="yesterdayDate"></p>
+
+        <div style="display: flex;flex-direction: column">
+            <h2>
+                <button type="submit" onClick=displayYesterday()>Yesterday</button>
+            </h2>
+            <p id="yesterdayDate"></p>
+        </div>
+        <div style="display: flex;flex-direction: column">
+            <h2>
+                <button type="submit" onClick=displayToday()>Today</button>
+            </h2>
+            <p id="todayDate"></p>
+        </div>
+        <div style="display: flex;flex-direction: column">
+            <h2>
+                <button type="submit" onClick=displayTomorrow()>Tomorrow</button>
+            </h2>
+            <p id="tomorrowDate"></p>
+        </div>
     </div>
-    <div style="display: flex;flex-direction: column">
-        <h2>
-            <button type="submit" onClick=displayToday()>Today</button>
-        </h2>
-        <p id="todayDate"></p>
+</section>
+<section>
+    <h1 style="text-align: center">Add operations</h1>
+    <div>
+
     </div>
-    <div style="display: flex;flex-direction: column">
-        <h2>
-            <button type="submit" onClick=displayTomorrow()>Tomorrow</button>
-        </h2>
-        <p id="tomorrowDate"></p>
-    </div>
-</div>
+</section>
 <footer>
     <script src="script.js"></script>
     Copyright by Rashmit Pankhania.&copy;

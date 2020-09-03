@@ -9,29 +9,6 @@ namespace DateTimeCalculator
     internal class Program
     {
         private readonly List<string> _history = new List<string>();
-        private static readonly Func<int, DateTime, DateTime> SubtractDays = (x, date) => date.AddDays(-x);
-        private static readonly Func<int, DateTime, DateTime> AddDays = (x, date) => date.AddDays(x);
-        private static readonly Func<int, DateTime, DateTime> SubtractMonths = (x, date) => date.AddMonths(-x);
-        private static readonly Func<int, DateTime, DateTime> AddMonths = (x, date) => date.AddMonths(x);
-        private static readonly Func<int, DateTime, DateTime> SubtractWeeks = (x, date) => date.AddDays(-x * 7);
-        private static readonly Func<int, DateTime, DateTime> AddWeeks = (x, date) => date.AddDays(x * 7);
-
-        private static readonly Func<DateTime, DateTime, int> SubtractDatesGetDays =
-            (date1, date2) => date1.Subtract(date2).Days;
-
-        private static readonly Func<DateTime, DateTime, int> SubtractDatesGetMonths =
-            (date1, date2) => date1.Subtract(date2).Days / 30;
-
-        private static readonly Func<DateTime, DateTime, int> SubtractDatesGetWeeks =
-            (date1, date2) => date1.Subtract(date2).Days / 7;
-        
-        private static readonly Func<DateTime, string> GetDayOfWeekFromDate = (date) => date.DayOfWeek.ToString();
-
-        private static readonly Func<DateTime, int> GetWeekOfTheYearFromDate = (date) =>
-        {
-            Calendar calendar = new GregorianCalendar();
-            return calendar.GetWeekOfYear(date, CalendarWeekRule.FirstDay, date.DayOfWeek);
-        };
 
         private static string ReadDateInput()
         {
@@ -86,32 +63,32 @@ namespace DateTimeCalculator
                         Console.WriteLine("Enter days");
                         var days = IntegerType.FromString(Console.ReadLine()); 
                         res = isItAddition
-                            ? AddDays(days, inputDateTime)
-                            : SubtractDays(days, inputDateTime);
+                            ? CalculatorImpl.AddDays(days, inputDateTime)
+                            : CalculatorImpl.SubtractDays(days, inputDateTime);
                         
                         break;
                     case 2:
                         Console.WriteLine("Enter months");
                         var months = IntegerType.FromString(Console.ReadLine()); 
                         res = isItAddition
-                            ? AddMonths(months, inputDateTime)
-                            : SubtractMonths(months, inputDateTime);
+                            ? CalculatorImpl.AddMonths(months, inputDateTime)
+                            : CalculatorImpl.SubtractMonths(months, inputDateTime);
                         
                         break;
                     case 3:
                         Console.WriteLine("Enter weeks");
                         var weeks = IntegerType.FromString(Console.ReadLine()); 
                         res = isItAddition
-                            ? AddWeeks(weeks, inputDateTime)
-                            : SubtractWeeks(weeks, inputDateTime);
+                            ? CalculatorImpl.AddWeeks(weeks, inputDateTime)
+                            : CalculatorImpl.SubtractWeeks(weeks, inputDateTime);
                         
                         break;
                     case 4:
                         DateTime date2 = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
                         Console.WriteLine("what do you want in return");
-                        Console.WriteLine("days : "+SubtractDatesGetDays(inputDateTime, date2));
-                        Console.WriteLine("weeks : "+SubtractDatesGetWeeks(inputDateTime, date2));
-                        Console.WriteLine("months : "+SubtractDatesGetMonths(inputDateTime, date2));
+                        Console.WriteLine("days : "+ CalculatorImpl.SubtractDatesGetDays(inputDateTime, date2));
+                        Console.WriteLine("weeks : "+ CalculatorImpl.SubtractDatesGetWeeks(inputDateTime, date2));
+                        Console.WriteLine("months : "+ CalculatorImpl.SubtractDatesGetMonths(inputDateTime, date2));
                         
                         break;
                         

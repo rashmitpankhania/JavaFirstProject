@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace DateTimeCalculator
 {
-    internal static class Program
+    internal class Program
     {
+        private readonly List<string> _history = new List<string>();
         private static readonly Func<int, DateTime, DateTime> SubtractDays = (x, date) => date.AddDays(-x);
         private static readonly Func<int, DateTime, DateTime> AddDays = (x, date) => date.AddDays(x);
         private static readonly Func<int, DateTime, DateTime> SubtractMonths = (x, date) => date.AddMonths(-x);
@@ -46,8 +49,11 @@ namespace DateTimeCalculator
             return IntegerType.FromString(Console.ReadLine());
         }
 
+        private readonly string[] _dayWeekChoiceArray = {"Day", "Month", "Week", "Date"};
+
         private static void StartGame()
         {
+            Program program = new Program();
             Console.WriteLine("Welcome!");
             var dat = DateTime.Now;
             Console.WriteLine($"Today is {dat.ToShortDateString()} at {dat.ToShortTimeString()}");
@@ -82,6 +88,7 @@ namespace DateTimeCalculator
                         res = isItAddition
                             ? AddDays(days, inputDateTime)
                             : SubtractDays(days, inputDateTime);
+                        
                         break;
                     case 2:
                         Console.WriteLine("Enter months");
@@ -89,6 +96,7 @@ namespace DateTimeCalculator
                         res = isItAddition
                             ? AddMonths(months, inputDateTime)
                             : SubtractMonths(months, inputDateTime);
+                        
                         break;
                     case 3:
                         Console.WriteLine("Enter weeks");
@@ -96,6 +104,7 @@ namespace DateTimeCalculator
                         res = isItAddition
                             ? AddWeeks(weeks, inputDateTime)
                             : SubtractWeeks(weeks, inputDateTime);
+                        
                         break;
                     case 4:
                         DateTime date2 = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
@@ -103,15 +112,33 @@ namespace DateTimeCalculator
                         Console.WriteLine("days : "+SubtractDatesGetDays(inputDateTime, date2));
                         Console.WriteLine("weeks : "+SubtractDatesGetWeeks(inputDateTime, date2));
                         Console.WriteLine("months : "+SubtractDatesGetMonths(inputDateTime, date2));
+                        
                         break;
                         
                 }
 
                 Console.WriteLine("=====================================");
                 Console.WriteLine("Result "+res.ToLongDateString());
+                string operationType = program.GetOperationHistory(isItAddition, typeChoice, inputDateTime, res);
+                program._history.Add(operationType);
                 Console.WriteLine("Press any key to continue or X for exit");
                 choiceInput = Console.ReadLine();
             }
+
+            Console.WriteLine("your history =========================================");
+            program._history.ForEach(Console.WriteLine);
+        }
+
+        private string GetOperationHistory(bool isAdd, int typeChoice, DateTime givenDate, DateTime res)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(DateTime.Now.ToString(CultureInfo.CurrentCulture));
+            stringBuilder.Append(isAdd ? " Operation - Add " : " Operation - Subtract ");
+            stringBuilder.Append("Quantity - ");
+            stringBuilder.Append(_dayWeekChoiceArray[typeChoice]);
+            stringBuilder.Append(" Given Date - " + givenDate.ToString(CultureInfo.CurrentCulture));
+            stringBuilder.Append(" Result - " + res.ToString(CultureInfo.CurrentCulture));
+            return stringBuilder.ToString();
         }
 
         public static void Main(string[] args)

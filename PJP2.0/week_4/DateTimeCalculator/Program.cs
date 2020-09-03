@@ -49,7 +49,7 @@ namespace DateTimeCalculator
             return IntegerType.FromString(Console.ReadLine());
         }
 
-        private readonly string[] _dayWeekChoiceArray = {"Day", "Month", "Week", "Date"};
+        private readonly string[] _dayWeekChoiceArray = {"", "Day", "Month", "Week", "Date"};
 
         private static void StartGame()
         {

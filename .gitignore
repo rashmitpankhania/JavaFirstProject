@@ -17,3 +17,4 @@ week_1/bin/Jenkinsfile
 week_1/bin/pom.xml
 PJP2.0/week_3/node_modules
 PJP2.0/week_4/week_4.sln.DotSettings.user
+*.bin

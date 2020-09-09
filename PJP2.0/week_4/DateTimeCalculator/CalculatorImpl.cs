@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace DateTimeCalculator
 {
-    internal class CalculatorImpl
+    internal static class CalculatorImpl
     {
         public static readonly Func<int, DateTime, DateTime> SubtractDays = (x, date) => date.AddDays(-x);
         public static readonly Func<int, DateTime, DateTime> AddDays = (x, date) => date.AddDays(x);

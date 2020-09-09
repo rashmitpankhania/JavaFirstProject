@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace DateTimeCalculator
 {
+    [Serializable]
     internal class Program
     {
+        [NonSerialized] const string FileName = @"../../../SavedSession.bin";
         private readonly List<string> _history = new List<string>();
 
         private static string ReadDateInput()
@@ -30,7 +34,20 @@ namespace DateTimeCalculator
 
         private static void StartGame()
         {
-            Program program = new Program();
+            Program program;
+            if (File.Exists(FileName))
+            {
+                Console.WriteLine("Reading saved file");
+                Stream openFileStream = File.OpenRead(FileName);
+                BinaryFormatter deserializer = new BinaryFormatter();
+                program = (Program) deserializer.Deserialize(openFileStream);
+                openFileStream.Close();
+            }
+            else
+            {
+                program = new Program();
+            }
+
             Console.WriteLine("Welcome!");
             var dat = DateTime.Now;
             Console.WriteLine($"Today is {dat.ToShortDateString()} at {dat.ToShortTimeString()}");
@@ -61,41 +78,40 @@ namespace DateTimeCalculator
                 {
                     case 1:
                         Console.WriteLine("Enter days");
-                        var days = IntegerType.FromString(Console.ReadLine()); 
+                        var days = IntegerType.FromString(Console.ReadLine());
                         res = isItAddition
                             ? CalculatorImpl.AddDays(days, inputDateTime)
                             : CalculatorImpl.SubtractDays(days, inputDateTime);
-                        
+
                         break;
                     case 2:
                         Console.WriteLine("Enter months");
-                        var months = IntegerType.FromString(Console.ReadLine()); 
+                        var months = IntegerType.FromString(Console.ReadLine());
                         res = isItAddition
                             ? CalculatorImpl.AddMonths(months, inputDateTime)
                             : CalculatorImpl.SubtractMonths(months, inputDateTime);
-                        
+
                         break;
                     case 3:
                         Console.WriteLine("Enter weeks");
-                        var weeks = IntegerType.FromString(Console.ReadLine()); 
+                        var weeks = IntegerType.FromString(Console.ReadLine());
                         res = isItAddition
                             ? CalculatorImpl.AddWeeks(weeks, inputDateTime)
                             : CalculatorImpl.SubtractWeeks(weeks, inputDateTime);
-                        
+
                         break;
                     case 4:
                         DateTime date2 = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
                         Console.WriteLine("what do you want in return");
-                        Console.WriteLine("days : "+ CalculatorImpl.SubtractDatesGetDays(inputDateTime, date2));
-                        Console.WriteLine("weeks : "+ CalculatorImpl.SubtractDatesGetWeeks(inputDateTime, date2));
-                        Console.WriteLine("months : "+ CalculatorImpl.SubtractDatesGetMonths(inputDateTime, date2));
-                        
+                        Console.WriteLine("days : " + CalculatorImpl.SubtractDatesGetDays(inputDateTime, date2));
+                        Console.WriteLine("weeks : " + CalculatorImpl.SubtractDatesGetWeeks(inputDateTime, date2));
+                        Console.WriteLine("months : " + CalculatorImpl.SubtractDatesGetMonths(inputDateTime, date2));
+
                         break;
-                        
                 }
 
                 Console.WriteLine("=====================================");
-                Console.WriteLine("Result "+res.ToLongDateString());
+                Console.WriteLine("Result " + res.ToLongDateString());
                 string operationType = program.GetOperationHistory(isItAddition, typeChoice, inputDateTime, res);
                 program._history.Add(operationType);
                 Console.WriteLine("Press any key to continue or X for exit");
@@ -104,6 +120,10 @@ namespace DateTimeCalculator
 
             Console.WriteLine("your history =========================================");
             program._history.ForEach(Console.WriteLine);
+            Stream saveFileStream = File.Create(FileName);
+            BinaryFormatter serializer = new BinaryFormatter();
+            serializer.Serialize(saveFileStream, program);
+            saveFileStream.Close();
         }
 
         private string GetOperationHistory(bool isAdd, int typeChoice, DateTime givenDate, DateTime res)

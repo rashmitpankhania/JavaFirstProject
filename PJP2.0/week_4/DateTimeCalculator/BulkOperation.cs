@@ -15,6 +15,7 @@ namespace DateTimeCalculator
         private string[] _allLines = new string[100000]; // 100000 operations
         private const string FileName = @"../../../InputBulkOperation.txt";
         private IEnumerable<string> _processedOutput;
+
         private void ReadFile()
         {
             try
@@ -34,19 +35,16 @@ namespace DateTimeCalculator
             List<string> list = new List<string>();
             Parallel.For(0, _allLines.Length, l =>
             {
-                list.Add(ExtractResultFromLine(l));
-                list.Add("\n");
+                _allLines[l] = _allLines[l] + " Result => " + ExtractResultFromLine(_allLines[l]);
             });
-            _processedOutput = list;
+            _processedOutput = _allLines;
             File.WriteAllLinesAsync("../../../Output.txt", _processedOutput, CancellationToken.None);
         }
 
-        private string ExtractResultFromLine(int l)
+        private string ExtractResultFromLine(string l)
         {
-            StringTokenizer stringTokenizer = new StringTokenizer(_allLines[l], " ".ToCharArray());
-            Console.WriteLine(stringTokenizer.ToArray().ToString());
+            StringTokenizer stringTokenizer = new StringTokenizer(l, " ".ToCharArray());
             DateTime dateTime = DateTime.Parse(stringTokenizer.Last().ToString(), CultureInfo.CurrentCulture);
-            Console.WriteLine(dateTime);
             string addOrSubtract = stringTokenizer.ElementAt(0).ToString();
             Console.WriteLine(addOrSubtract);
             int quantity = Convert.ToInt32(stringTokenizer.ElementAt(1).ToString());

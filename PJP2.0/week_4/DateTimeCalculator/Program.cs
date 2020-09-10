@@ -11,7 +11,9 @@ namespace DateTimeCalculator
     [Serializable]
     internal class Program
     {
-        [NonSerialized] const string FileName = @"../../../SavedSession.bin";
+        [NonSerialized] private const string FileName = @"../../../SavedSession.bin";
+
+        private readonly string[] _dayWeekChoiceArray = {"", "Day", "Month", "Week", "Date"};
         private readonly List<string> _history = new List<string>();
 
         private static string ReadDateInput()
@@ -30,8 +32,6 @@ namespace DateTimeCalculator
             return IntegerType.FromString(Console.ReadLine());
         }
 
-        private readonly string[] _dayWeekChoiceArray = {"", "Day", "Month", "Week", "Date"};
-
         private static void StartGame()
         {
             Program program;
@@ -39,7 +39,7 @@ namespace DateTimeCalculator
             {
                 Console.WriteLine("Reading saved file");
                 Stream openFileStream = File.OpenRead(FileName);
-                BinaryFormatter deserializer = new BinaryFormatter();
+                var deserializer = new BinaryFormatter();
                 program = (Program) deserializer.Deserialize(openFileStream);
                 openFileStream.Close();
             }
@@ -52,7 +52,7 @@ namespace DateTimeCalculator
             var dat = DateTime.Now;
             Console.WriteLine($"Today is {dat.ToShortDateString()} at {dat.ToShortTimeString()}");
             Console.WriteLine("Press any key to continue or X for exit");
-            string choiceInput = Console.ReadLine();
+            var choiceInput = Console.ReadLine();
             while (choiceInput != "X" && choiceInput != "x")
             {
                 Console.WriteLine("Press 1 for Add or Press 2 for Subtract");
@@ -70,10 +70,10 @@ namespace DateTimeCalculator
                     Console.WriteLine("Subtract waat?");
                 }
 
-                int typeChoice = DayWeekDateChoice();
+                var typeChoice = DayWeekDateChoice();
                 Console.WriteLine("ok now enter date");
-                DateTime inputDateTime = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
-                DateTime res = DateTime.Today;
+                var inputDateTime = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
+                var res = DateTime.Today;
                 switch (typeChoice)
                 {
                     case 1:
@@ -101,7 +101,7 @@ namespace DateTimeCalculator
 
                         break;
                     case 4:
-                        DateTime date2 = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
+                        var date2 = DateTime.Parse(ReadDateInput(), CultureInfo.CurrentCulture);
                         Console.WriteLine("what do you want in return");
                         Console.WriteLine("days : " + CalculatorImpl.SubtractDatesGetDays(inputDateTime, date2));
                         Console.WriteLine("weeks : " + CalculatorImpl.SubtractDatesGetWeeks(inputDateTime, date2));
@@ -112,7 +112,7 @@ namespace DateTimeCalculator
 
                 Console.WriteLine("=====================================");
                 Console.WriteLine("Result " + res.ToLongDateString());
-                string operationType = program.GetOperationHistory(isItAddition, typeChoice, inputDateTime, res);
+                var operationType = program.GetOperationHistory(isItAddition, typeChoice, inputDateTime, res);
                 program._history.Add(operationType);
                 Console.WriteLine("Press any key to continue or X for exit");
                 choiceInput = Console.ReadLine();
@@ -121,14 +121,14 @@ namespace DateTimeCalculator
             Console.WriteLine("your history =========================================");
             program._history.ForEach(Console.WriteLine);
             Stream saveFileStream = File.Create(FileName);
-            BinaryFormatter serializer = new BinaryFormatter();
+            var serializer = new BinaryFormatter();
             serializer.Serialize(saveFileStream, program);
             saveFileStream.Close();
         }
 
         private string GetOperationHistory(bool isAdd, int typeChoice, DateTime givenDate, DateTime res)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append(DateTime.Now.ToString(CultureInfo.CurrentCulture));
             stringBuilder.Append(isAdd ? " Operation - Add " : " Operation - Subtract ");
             stringBuilder.Append("Quantity - ");
@@ -138,10 +138,10 @@ namespace DateTimeCalculator
             return stringBuilder.ToString();
         }
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             // StartGame();
-            BulkOperation bulkOperation = new BulkOperation();
+            var bulkOperation = new BulkOperation();
             bulkOperation.StartBulkOperation();
         }
     }

@@ -12,15 +12,16 @@ namespace DateTimeCalculator
 {
     public class BulkOperation
     {
-        private string[] _allLines = new string[100000]; // 100000 operations
-        private const string FileName = @"../../../InputBulkOperation.txt";
+        private string[] _allLines = new string[100001]; // 100000 operations
+        private static string InputFileName { get; } = @"../../../InputBulkOperation.txt";
+        private static string OutputFileName { get; } = @"../../../Output.txt";
         private IEnumerable<string> _processedOutput;
 
         private void ReadFile()
         {
             try
             {
-                _allLines = File.ReadAllLines(FileName);
+                _allLines = File.ReadAllLinesAsync(InputFileName, CancellationToken.None).Result;
             }
             catch (FileNotFoundException e)
             {
@@ -32,46 +33,30 @@ namespace DateTimeCalculator
 
         private void Process()
         {
-            List<string> list = new List<string>();
-            Parallel.For(0, _allLines.Length, l =>
-            {
-                _allLines[l] = _allLines[l] + " Result => " + ExtractResultFromLine(_allLines[l]);
-            });
+            Parallel.For(0, _allLines.Length, l => { _allLines[l] = ExtractResultFromLine(_allLines[l]); });
             _processedOutput = _allLines;
-            File.WriteAllLinesAsync("../../../Output.txt", _processedOutput, CancellationToken.None);
+            File.WriteAllLinesAsync(OutputFileName, _processedOutput, CancellationToken.None);
         }
 
-        private string ExtractResultFromLine(string l)
+        private static string ExtractResultFromLine(string l)
         {
-            StringTokenizer stringTokenizer = new StringTokenizer(l, " ".ToCharArray());
-            DateTime dateTime = DateTime.Parse(stringTokenizer.Last().ToString(), CultureInfo.CurrentCulture);
-            string addOrSubtract = stringTokenizer.ElementAt(0).ToString();
-            Console.WriteLine(addOrSubtract);
-            int quantity = Convert.ToInt32(stringTokenizer.ElementAt(1).ToString());
-            string typeOfQuantity = stringTokenizer.ElementAt(2).ToString();
+            var stringTokenizer = new StringTokenizer(l, " ".ToCharArray());
+            var dateTime = DateTime.Parse(stringTokenizer.Last().ToString(), CultureInfo.CurrentCulture);
+            var addOrSubtract = stringTokenizer.ElementAt(0).ToString().ToLower();
+            var quantity = Convert.ToInt32(stringTokenizer.ElementAt(1).ToString());
+            var typeOfQuantity = stringTokenizer.ElementAt(2).ToString().ToLower();
             Debug.Assert(addOrSubtract != null, nameof(addOrSubtract) + " != null");
-            int mul = addOrSubtract.Equals("Add") ? 1 : -1;
-            string res;
-            switch (typeOfQuantity)
+            var mul = addOrSubtract.Equals("add") ? 1 : -1;
+            var res = typeOfQuantity switch
             {
-                case "Days":
-                    res = dateTime.AddDays(mul * quantity).ToShortDateString();
-                    break;
-                case "Months":
-                    res = dateTime.AddMonths(mul * quantity).ToShortDateString();
-                    break;
-                case "Weeks":
-                    res = dateTime.AddDays(mul * quantity * 7).ToShortDateString();
-                    break;
-                case "Years":
-                    res = dateTime.AddYears(mul * quantity).ToShortDateString();
-                    break;
-                default:
-                    res = "Please enter Days, Months, Weeks or Years ONLY!";
-                    break;
-            }
+                "days" => dateTime.AddDays(mul * quantity).ToShortDateString(),
+                "months" => dateTime.AddMonths(mul * quantity).ToShortDateString(),
+                "weeks" => dateTime.AddDays(mul * quantity * 7).ToShortDateString(),
+                "years" => dateTime.AddYears(mul * quantity).ToShortDateString(),
+                _ => "Please enter Days, Months, Weeks or Years ONLY!"
+            };
 
-            return res;
+            return l + " Result => " + res;
         }
 
         public void StartBulkOperation()

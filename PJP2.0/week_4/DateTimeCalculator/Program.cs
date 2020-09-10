@@ -140,7 +140,9 @@ namespace DateTimeCalculator
 
         public static void Main(string[] args)
         {
-            StartGame();
+            // StartGame();
+            BulkOperation bulkOperation = new BulkOperation();
+            bulkOperation.StartBulkOperation();
         }
     }
 }
